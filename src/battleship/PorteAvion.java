@@ -1,4 +1,4 @@
 package battleship;
 
-public class PorteAvion {
+public class PorteAvion extends Bateau {
 }
