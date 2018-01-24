@@ -1,4 +1,4 @@
 package battleship;
 
-public class Bateau {
+public class Bateau extends Element {
 }

@@ -1,4 +1,5 @@
 package battleship;
 
-public class Torpilleur {
+public class Torpilleur extends Bateau {
+
 }
