@@ -8,7 +8,7 @@ public class PorteAvion extends Bateau {
     int b3[][];
     int b4[][];
     int b5[][];
-    
+
     PorteAvion() {
         taille = 5;
     }
