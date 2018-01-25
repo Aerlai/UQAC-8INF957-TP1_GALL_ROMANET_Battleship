@@ -1,4 +1,4 @@
-package battleship;
+package Bateaux;
 
 public class PorteAvion extends Bateau {
 
@@ -9,7 +9,7 @@ public class PorteAvion extends Bateau {
     int b4[][];
     int b5[][];
 
-    PorteAvion() {
+    public PorteAvion() {
         taille = 5;
     }
 }

@@ -1,4 +1,4 @@
-package battleship;
+package Bateaux;
 
 public class Croiseur extends Bateau {
 }

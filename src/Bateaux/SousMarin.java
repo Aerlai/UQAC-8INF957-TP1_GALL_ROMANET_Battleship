@@ -1,4 +1,4 @@
-package battleship;
+package Bateaux;
 
 public class SousMarin extends Bateau {
 }

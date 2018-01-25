@@ -1,4 +1,4 @@
-package battleship;
+package Carte;
 
 public class Carte {
     Element matrice[][] = {{null,null,null,null,null,null,null,null,null,null},
@@ -12,7 +12,7 @@ public class Carte {
                           {null,null,null,null,null,null,null,null,null,null},
                           {null,null,null,null,null,null,null,null,null,null}};
 
-    Carte(){
+    public Carte(){
 
     }
 

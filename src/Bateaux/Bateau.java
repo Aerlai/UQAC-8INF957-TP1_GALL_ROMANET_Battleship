@@ -1,4 +1,4 @@
-package battleship;
+package Bateaux;
 
 public class Bateau {
 
@@ -15,17 +15,22 @@ public class Bateau {
     }
 
     // Méthode d'attaque
-    void attaquer(int x, int y){
+    public void attaquer(int x, int y){
 
     }
 
     // Méthode de déplacement
-    void deplacer(String direction){
+    public void deplacer(String direction){
 
     }
 
     // Méthode de rotation
-    void rotation(){
+    public void rotation(){
 
+    }
+
+    // Vérification de colision
+    private boolean verificationColision(){
+        return false;
     }
 }

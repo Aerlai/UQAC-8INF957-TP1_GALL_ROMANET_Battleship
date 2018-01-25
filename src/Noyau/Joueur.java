@@ -1,4 +1,7 @@
-package battleship;
+package Noyau;
+
+import Carte.Carte;
+import Bateaux.*;
 
 public class Joueur {
     // Nom du joueur
