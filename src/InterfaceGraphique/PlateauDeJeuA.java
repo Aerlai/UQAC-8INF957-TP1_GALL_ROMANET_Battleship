@@ -23,7 +23,6 @@ public class PlateauDeJeuA extends JPanel{
             }
         }
 
-
         //g.fillRoundRect(55, 65, 55, 30, 5, 5);
 
     }
