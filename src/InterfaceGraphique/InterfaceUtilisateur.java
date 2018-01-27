@@ -18,12 +18,7 @@ public class InterfaceUtilisateur extends JFrame {
         //On limite le resize
         this.setResizable(false);
 
-        //Instanciation d'un objet JPanel
-        JPanel pan = new JPanel();
-        //Définition de sa couleur de fond
-        pan.setBackground(Color.WHITE);
-        //On prévient notre JFrame que notre JPanel sera son content pane
-        this.setContentPane(pan);
+        this.setContentPane(new PlateauDeJeuA());
 
         //On rend la fenetre visible
         this.setVisible(true);

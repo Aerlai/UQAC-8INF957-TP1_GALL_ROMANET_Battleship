@@ -1,5 +1,7 @@
 # TP1_GALL_ROMANET_Battleship
 
+JDK 1.8
+
 ## UQAC - 8INF957 - Programmation orienté objet avancé
 
 ## DEVOIR I : BATTLESHIP+ (10%)

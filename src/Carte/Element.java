@@ -1,4 +1,4 @@
-package battleship;
+package Carte;
 
 public class Element {
 }

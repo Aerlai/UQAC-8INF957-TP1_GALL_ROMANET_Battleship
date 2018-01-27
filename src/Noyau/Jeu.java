@@ -10,5 +10,6 @@ public class Jeu {
         Joueur joueurB = new Joueur();
 
         InterfaceUtilisateur ui = new InterfaceUtilisateur();
+        //InterfaceUtilisateur ui2 = new InterfaceUtilisateur();
     }
 }
