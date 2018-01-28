@@ -1,5 +1,7 @@
 package Bateaux;
 
+import Noyau.*;
+
 public class Bateau {
 
     // Point de vie du bateau
@@ -15,7 +17,7 @@ public class Bateau {
     }
 
     // Méthode d'attaque
-    public void attaquer(int x, int y){
+    public void attaquer(Joueur joueur, int x, int y){
 
     }
 

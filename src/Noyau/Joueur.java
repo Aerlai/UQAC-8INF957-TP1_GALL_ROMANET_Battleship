@@ -30,4 +30,24 @@ public class Joueur {
         sousMarin = new SousMarin();
         torpilleur = new Torpilleur();
     }
+
+    // attaque d'une position de l'adversaire
+    public void attaquer(Joueur joueur, int x, int y){
+
+    }
+
+    // Déplacement durant la partie
+    public void deplacer(Bateau ship){
+
+    }
+
+    // Rotation de bateau
+    public void tourner( Bateau ship){
+
+    }
+
+    // Placement initial des bateaux par le joueur
+    public void placer(){
+
+    }
 }
