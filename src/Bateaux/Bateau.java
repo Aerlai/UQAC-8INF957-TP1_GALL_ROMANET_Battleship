@@ -54,7 +54,7 @@ public class Bateau {
 
         }
         else if(direction == "DROITE"){
-            
+
         }
     }
 
@@ -75,5 +75,6 @@ public class Bateau {
             if(b1Y<b2Y) return "HAUT";
             else return "BAS";
         }
+        return null;
     }
 }
