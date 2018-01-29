@@ -35,4 +35,9 @@ public class Bateau {
     private boolean verificationColision(){
         return false;
     }
+
+    // Obtenir la direction du bateau ( HAUT, BAS, GAUCHE, DROITE)
+    private String getDirection(){
+        return "HAUT";
+    }
 }

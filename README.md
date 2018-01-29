@@ -12,10 +12,10 @@ Notre mission est d’implémenter le jeu Bataille Navale avec un plus (Battlesh
 Règles du jeu :
 #### 1.Deux joueurs, et chaque joueur a une flotte composée de 5 bateaux (cases, champ de tir) :
 1. Porte-avion (5, 2), 
-2. battleship.Croiseur (4, 2)
+2. Croiseur (4, 2)
 3. Contre torpilleur (3, 2)
 4. Sous-marin (3, 4)
-5. battleship.Torpilleur (2, 5)
+5. Torpilleur (2, 5)
 
 #### 2. Un tir est limité à un champ de tir vertical ou horizontal. (à définir pour chaque bateau)
 
