@@ -34,12 +34,28 @@ public class Bateau {
 
     // Méthode de déplacement
     public void deplacer(String direction){
+        if(direction == "HAUT"){
 
+        }
+        else if(direction == "BAS"){
+
+        }
+        else if(direction == "DROITE"){
+
+        }
+        else if(direction == "GAUCHE"){
+
+        }
     }
 
     // Méthode de rotation
-    public void rotation(){
+    public void rotation(String direction){
+        if(direction == "GAUCHE"){
 
+        }
+        else if(direction == "DROITE"){
+            
+        }
     }
 
     // Vérification de colision
