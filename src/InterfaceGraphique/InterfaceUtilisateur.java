@@ -18,7 +18,7 @@ public class InterfaceUtilisateur extends JFrame {
         //On limite le resize
         this.setResizable(false);
 
-        this.setContentPane(new PlateauDeJeuA());
+        this.setContentPane(new PlateauDouble());
 
         //On rend la fenetre visible
         this.setVisible(true);
