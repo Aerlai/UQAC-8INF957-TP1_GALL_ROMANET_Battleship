@@ -10,14 +10,14 @@ public class Joueur {
     // Création de 2 cartes :
     // - 1 Carte de placement des bateaux
     // - 1 Carte d'impacts
-    Carte carteBateaux, carteImpacts;
+    public Carte carteBateaux, carteImpacts;
 
     // Les bateaux du joueur
-    PorteAvion porteAvion;
-    Croiseur croiseur;
-    ContreTorpilleur contreTorpilleur;
-    SousMarin sousMarin;
-    Torpilleur torpilleur;
+    public PorteAvion porteAvion;
+    public Croiseur croiseur;
+    public ContreTorpilleur contreTorpilleur;
+    public SousMarin sousMarin;
+    public Torpilleur torpilleur;
 
 
     Joueur(){
