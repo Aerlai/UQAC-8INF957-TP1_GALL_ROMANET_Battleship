@@ -7,4 +7,6 @@ public class SousMarin extends Bateau {
         id = 4;
     }
 
+
+
 }
