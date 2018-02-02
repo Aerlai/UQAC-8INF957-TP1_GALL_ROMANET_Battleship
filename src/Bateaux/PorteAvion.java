@@ -4,7 +4,6 @@ import Noyau.Joueur;
 
 public class PorteAvion extends Bateau {
 
-
     public PorteAvion() {
         taille = 5;
         id = 1;
@@ -180,4 +179,47 @@ public class PorteAvion extends Bateau {
 
         }
     }
+
+    // Méthode de rotation TODO
+    public void rotation(String directionDeRotation){
+        String directionDuBateau = this.getDirection();
+        if(directionDuBateau == "HAUT"){
+            if(directionDeRotation == "GAUCHE"){
+                if(        joueur.carteBateaux.verification(this.getB2X(), this.getB2Y() - 1) == 0
+                        && joueur.carteBateaux.verification(this.getB3X(), this.getB3Y() - 1) == 0
+                        && joueur.carteBateaux.verification(this.getB4X(), this.getB4Y() - 1) == 0
+                        && joueur.carteBateaux.verification(this.getB5X(), this.getB5Y() - 1) == 0){
+
+                }
+            }
+            else if(directionDeRotation == "DROITE"){
+
+            }
+        }
+        else if(directionDuBateau == "BAS"){
+            if(directionDeRotation == "GAUCHE"){
+
+            }
+            else if(directionDeRotation == "DROITE"){
+
+            }
+        }
+        else if(directionDuBateau == "DROITE"){
+            if(directionDeRotation == "GAUCHE"){
+
+            }
+            else if(directionDeRotation == "DROITE"){
+
+            }
+        }
+        else if(directionDuBateau == "GAUCHE"){
+            if(directionDeRotation == "GAUCHE"){
+
+            }
+            else if(directionDeRotation == "DROITE"){
+
+            }
+        }
+    }
+
 }

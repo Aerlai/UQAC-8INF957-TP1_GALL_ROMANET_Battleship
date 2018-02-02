@@ -119,19 +119,14 @@ public class Bateau {
             System.out.println("Pas d'impact");
     }
 
-    // Méthode de déplacement
+    // Méthode de déplacement -- PAR SURCHARGE
     public void deplacer(String direction, Joueur joueur){
 
     }
 
-    // Méthode de rotation
-    public void rotation(String direction){
-        if(direction == "GAUCHE"){
+    // Méthode de rotation -- PAR SURCHARGE
+    public void rotation(String directionDeRotation){
 
-        }
-        else if(direction == "DROITE"){
-
-        }
     }
 
     // Vérification de colision
