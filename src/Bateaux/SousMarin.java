@@ -134,12 +134,7 @@ public class SousMarin extends Bateau {
 
     // Méthode de rotation TODO
     public void rotation(String directionDeRotation){
-        if(direction == "GAUCHE"){
 
-        }
-        else if(direction == "DROITE"){
-
-        }
     }
 
 
