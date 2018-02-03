@@ -40,10 +40,7 @@ public class CaseGraphique extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent arg0) {
-                if (arg0.getButton() == 3) {
-                } else {
-
-                }
+                System.out.println(id[0] +"   "+ id[1]);
             }
         });
         }

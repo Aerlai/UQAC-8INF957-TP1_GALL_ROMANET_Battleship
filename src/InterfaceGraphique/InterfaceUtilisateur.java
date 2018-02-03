@@ -15,7 +15,10 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     int tailleX = 10;
     int tailleY = 10;
 
-    CaseGraphique[][] cases ;
+    CaseGraphique[][] cases1 ;
+    CaseGraphique[][] cases2 ;
+    CaseGraphique[][] cases3 ;
+    CaseGraphique[][] cases4 ;
 
     JMenuItem nouvellepartie;
     JMenuItem sauvegarder;
@@ -42,59 +45,75 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         barremenu.add(menu);
         setJMenuBar(barremenu);
 
-        JComponent jc = new JPanel (new GridLayout(tailleY*2, tailleX*2));
-        Border limite = BorderFactory.createLineBorder(Color.black,1);
 
-        cases = new CaseGraphique[tailleX*2][tailleY*2];
+        JComponent mainjc = new JPanel (new GridLayout(2, 2));
+        JComponent jc1 = new JPanel (new GridLayout(tailleY, tailleX));
+        JComponent jc2 = new JPanel (new GridLayout(tailleY, tailleX));
+        JComponent jc3 = new JPanel (new GridLayout(tailleY, tailleX));
+        JComponent jc4 = new JPanel (new GridLayout(tailleY, tailleX));
+
+        Border limitecase = BorderFactory.createLineBorder(Color.black,1);
+        Border limitegrille = BorderFactory.createLineBorder(Color.black,7);
+
+
+        cases1 = new CaseGraphique[tailleX][tailleY];
+        cases2 = new CaseGraphique[tailleX][tailleY];
+        cases3 = new CaseGraphique[tailleX][tailleY];
+        cases4 = new CaseGraphique[tailleX][tailleY];
+
+
+        for(int i = 0; i < tailleX; i++){
+            for(int j = 0; j< tailleY; j++){
+                CaseGraphique cg = new CaseGraphique(i,j, this);
+                joueurA.getCarteImpacts().getCase(i, j).addObserver(this);
+                cases2[i][j]=cg;
+                cg.setBorder(limitecase);
+                jc1.add(cg);
+            }
+        }
+        jc1.setBorder(limitegrille);
+
+        for(int i = 0; i < tailleX; i++){
+            for(int j = 0; j< tailleY; j++){
+                CaseGraphique cg = new CaseGraphique(i,j, this);
+                joueurB.getCarteImpacts().getCase(i, j).addObserver(this);
+                cases3[i][j]=cg;
+                cg.setBorder(limitecase);
+                jc2.add(cg);
+            }
+        }
+        jc2.setBorder(limitegrille);
 
         for(int i = 0; i < tailleX; i++){
             for(int j = 0; j< tailleY; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
                 joueurA.getCarteBateaux().getCase(i, j).addObserver(this);
-                cases[i][j]=cg;
-                cg.setBorder(limite);
-                jc.add(cg);
+                cases1[i][j]=cg;
+                cg.setBorder(limitecase);
+                jc3.add(cg);
             }
         }
-        jc.setBorder(limite);
+        jc3.setBorder(limitegrille);
 
 
         for(int i = 0; i < tailleX; i++){
-            for(int j = tailleY; j< tailleY*2; j++){
-                CaseGraphique cg = new CaseGraphique(i,j, this);
-                joueurA.getCarteImpacts().getCase(i, j-tailleY).addObserver(this);
-                cases[i][j]=cg;
-                cg.setBorder(limite);
-                jc.add(cg);
-            }
-        }
-        jc.setBorder(limite);
-
-        for(int i = tailleX; i < tailleX*2; i++){
             for(int j = 0; j< tailleY; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
-                joueurB.getCarteImpacts().getCase(i-tailleX, j).addObserver(this);
-                cases[i][j]=cg;
-                cg.setBorder(limite);
-                jc.add(cg);
+                joueurB.getCarteBateaux().getCase(i, j).addObserver(this);
+                cases4[i][j]=cg;
+                cg.setBorder(limitecase);
+                jc4.add(cg);
             }
         }
-        jc.setBorder(limite);
+        jc4.setBorder(limitegrille);
 
-        for(int i = tailleX; i < tailleX*2; i++){
-            for(int j = tailleY; j< tailleY*2; j++){
-                CaseGraphique cg = new CaseGraphique(i,j, this);
-                joueurB.getCarteBateaux().getCase(i-tailleX, j-tailleY).addObserver(this);
-                cases[i][j]=cg;
-                cg.setBorder(limite);
-                jc.add(cg);
-            }
-        }
 
-        jc.setBorder(limite);
-
-        add(jc);
-        setContentPane(jc);
+        mainjc.add(jc1);
+        mainjc.add(jc2);
+        mainjc.add(jc3);
+        mainjc.add(jc4);
+        add(mainjc);
+        setContentPane(mainjc);
 
         joueurA.getCarteBateaux().addObserver(this);
         joueurA.getCarteImpacts().addObserver(this);
@@ -112,6 +131,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     @Override
     public void update(Observable o, Object arg){
 
+
     }
 
     public void updatemap(Carte map ) {
@@ -128,9 +148,18 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         {
             for(int j=0;j<tailleY;j++)
             {   id = map.verification(i,j);
-                paintCase(cases[i][j], id);
-                cases[i][j].validate();
-                cases[i][j].repaint();
+                paintCase(cases1[i][j], id);
+                cases1[i][j].validate();
+                cases1[i][j].repaint();
+                paintCase(cases2[i][j], id);
+                cases2[i][j].validate();
+                cases2[i][j].repaint();
+                paintCase(cases3[i][j], id);
+                cases3[i][j].validate();
+                cases3[i][j].repaint();
+                paintCase(cases4[i][j], id);
+                cases4[i][j].validate();
+                cases4[i][j].repaint();
             }
         }
 
