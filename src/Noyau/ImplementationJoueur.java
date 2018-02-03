@@ -44,10 +44,22 @@ public class ImplementationJoueur implements Joueur {
         }
     }
 
-    // Déplacement durant la partie TODO
+    // Déplacement durant la partie
     public void deplacer(int id, String directionDuDeplacement){
         if(id==1){
-            // porteAvion.deplacer();
+             porteAvion.deplacer(directionDuDeplacement, this);
+        }
+        if(id==2){
+            croiseur.deplacer(directionDuDeplacement, this);
+        }
+        if(id==3){
+            contreTorpilleur.deplacer(directionDuDeplacement, this);
+        }
+        if(id==4){
+            sousMarin.deplacer(directionDuDeplacement, this);
+        }
+        if(id==5){
+            torpilleur.deplacer(directionDuDeplacement, this);
         }
     }
 
