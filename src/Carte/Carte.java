@@ -1,9 +1,8 @@
 package Carte;
 
-import Noyau.Joueur;
+import Noyau.ImplementationJoueur;
 
 import java.util.Observable;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Carte extends Observable {
@@ -87,7 +86,7 @@ public class Carte extends Observable {
         return 0; // 0 = rien
     }
     // rafraichir la carte
-    public void refresh(Joueur joueur){
+    public void refresh(ImplementationJoueur joueur){
         // on efface les données
         for(int i=0;i<10;i++){
             for (int j=0;j<10;j++ ){

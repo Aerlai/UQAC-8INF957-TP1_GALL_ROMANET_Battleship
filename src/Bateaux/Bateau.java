@@ -93,7 +93,7 @@ public class Bateau {
     }
 
     // Méthode d'attaque
-    public void attaquer(Joueur joueur, int x, int y){
+    public void attaquer(ImplementationJoueur joueur, int x, int y){
         int verif = joueur.carteBateaux.verification(x,y);
         if (verif == 1) {
             System.out.println("Touché le porte avion");

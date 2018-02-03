@@ -1,6 +1,6 @@
 package Bateaux;
 
-import Noyau.Joueur;
+import Noyau.ImplementationJoueur;
 
 public class ContreTorpilleur extends Bateau {
 
@@ -11,7 +11,7 @@ public class ContreTorpilleur extends Bateau {
     }
 
     // Méthode de déplacement
-    public void deplacer(String directionDuDeplacement, Joueur joueur){
+    public void deplacer(String directionDuDeplacement, ImplementationJoueur joueur){
         String directionDuBateau = this.getDirection();
         if(directionDuBateau.equals("HAUT")){
             if(directionDuDeplacement.equals("HAUT") && joueur.carteBateaux.verification(this.getB1X(), this.getB1Y() - 1) == 0) {

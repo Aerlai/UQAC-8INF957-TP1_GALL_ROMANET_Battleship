@@ -12,8 +12,5 @@ public class Jeu {
 
         InterfaceUtilisateur.run();
 
-        //InterfaceUtilisateur ui = new InterfaceUtilisateur(new Carte());
-        //ui.setVisible(true);
-        //InterfaceUtilisateur ui2 = new InterfaceUtilisateur();
     }
 }
