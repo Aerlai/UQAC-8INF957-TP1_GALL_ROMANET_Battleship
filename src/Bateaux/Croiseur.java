@@ -158,12 +158,12 @@ public class Croiseur extends Bateau {
 
     // Méthode de rotation TODO
     public void rotation(String directionDeRotation){
-        if(direction == "GAUCHE"){
+       /* if(direction == "GAUCHE"){
 
         }
         else if(direction == "DROITE"){
 
-        }
+        }*/
     }
 
 }

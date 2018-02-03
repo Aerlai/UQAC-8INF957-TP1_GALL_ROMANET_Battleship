@@ -2,7 +2,15 @@ package Carte;
 
 import Noyau.Joueur;
 
-public class Carte {
+import java.util.Observable;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Carte extends Observable {
+
+    public int TailleX=10;
+    public int tailleY=10;
+
     private Element matrice[][] = {{null,null,null,null,null,null,null,null,null,null},
                           {null,null,null,null,null,null,null,null,null,null},
                           {null,null,null,null,null,null,null,null,null,null},
@@ -15,7 +23,50 @@ public class Carte {
                           {null,null,null,null,null,null,null,null,null,null}};
 
     public Carte(){
+        matrice = new Element[10][10];
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                matrice[i][j]= new Element(false, false, 6);
+            }
+        }
 
+    }
+
+    public static Carte randomCarte(){
+        int TailleX=10, tailleY =10;
+        Carte carte = new Carte();
+        carte.matrice = new Element[TailleX][tailleY];
+        int randomx = 0;
+        int randomy = 0;
+        boolean deployed = false;
+
+        //torpilleur
+        while(!deployed){
+            randomx = ThreadLocalRandom.current().nextInt(0, TailleX );
+            randomy = ThreadLocalRandom.current().nextInt(0, tailleY );
+            if(carte.matrice[randomx][randomy]==null){
+                carte.placerBateau(randomx,randomy,5,true);
+                deployed=true;
+            }
+        }
+    deployed=false;
+        while(!deployed){
+            randomx = ThreadLocalRandom.current().nextInt(0, TailleX );
+            randomy = ThreadLocalRandom.current().nextInt(0, tailleY );
+            if(carte.matrice[randomx][randomy]==null){
+                carte.placerBateau(randomx,randomy,5,true);
+                deployed=true;
+            }
+        }
+
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                if(carte.matrice[i][j]==null){
+                    carte.matrice[i][j]= new Element(false, false, 6);
+                }
+            }
+        }
+        return carte;
     }
 
     // méthode d'ajout d'impacts
@@ -66,5 +117,25 @@ public class Carte {
         // torpilleur
         placerBateau(joueur.torpilleur.getB1X(),joueur.torpilleur.getB1Y(), 5, true); // Avant du bateau
         placerBateau(joueur.torpilleur.getB2X(),joueur.torpilleur.getB2Y(), 5, false);
+    }
+
+    public int getTailleX() {
+        return TailleX;
+    }
+
+    public void setTailleX(int tailleX) {
+        TailleX = tailleX;
+    }
+
+    public int getTailleY() {
+        return tailleY;
+    }
+
+    public void setTailleY(int tailleY) {
+        this.tailleY = tailleY;
+    }
+
+    public Element getCase(int x, int y){
+        return this.matrice[x][y];
     }
 }

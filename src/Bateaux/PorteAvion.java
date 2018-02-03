@@ -185,12 +185,12 @@ public class PorteAvion extends Bateau {
         String directionDuBateau = this.getDirection();
         if(directionDuBateau == "HAUT"){
             if(directionDeRotation == "GAUCHE"){
-                if(        joueur.carteBateaux.verification(this.getB2X(), this.getB2Y() - 1) == 0
+               /* if(        joueur.carteBateaux.verification(this.getB2X(), this.getB2Y() - 1) == 0
                         && joueur.carteBateaux.verification(this.getB3X(), this.getB3Y() - 1) == 0
                         && joueur.carteBateaux.verification(this.getB4X(), this.getB4Y() - 1) == 0
                         && joueur.carteBateaux.verification(this.getB5X(), this.getB5Y() - 1) == 0){
 
-                }
+                }*/
             }
             else if(directionDeRotation == "DROITE"){
 

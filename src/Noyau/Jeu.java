@@ -1,5 +1,6 @@
 package Noyau;
 
+import Carte.Carte;
 import InterfaceGraphique.InterfaceUtilisateur;
 
 public class Jeu {
@@ -9,7 +10,10 @@ public class Jeu {
         Joueur joueurA = new Joueur();
         Joueur joueurB = new Joueur();
 
-        InterfaceUtilisateur ui = new InterfaceUtilisateur();
+        InterfaceUtilisateur.run();
+
+        //InterfaceUtilisateur ui = new InterfaceUtilisateur(new Carte());
+        //ui.setVisible(true);
         //InterfaceUtilisateur ui2 = new InterfaceUtilisateur();
     }
 }

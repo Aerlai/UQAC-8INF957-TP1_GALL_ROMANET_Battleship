@@ -1,6 +1,8 @@
 package Carte;
 
-public class Element {
+import java.util.Observable;
+
+public class Element extends Observable {
     // Si bateau sinon impact
     private boolean bateau;
     private boolean teteDeBateau;
@@ -14,5 +16,8 @@ public class Element {
 
     public int getID(){
         return id;
+    }
+    public void setID(int id){
+        this.id=id;
     }
 }
