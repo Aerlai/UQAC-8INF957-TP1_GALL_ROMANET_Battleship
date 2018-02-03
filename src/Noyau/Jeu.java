@@ -10,7 +10,7 @@ public class Jeu {
         Joueur joueurA = new ImplementationJoueur();
         Joueur joueurB = new ImplementationJoueur();
 
-        InterfaceUtilisateur.run();
+        InterfaceUtilisateur ui = new InterfaceUtilisateur(joueurA, joueurB);
 
     }
 }

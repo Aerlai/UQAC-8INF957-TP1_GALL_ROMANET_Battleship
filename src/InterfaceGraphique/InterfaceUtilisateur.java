@@ -1,6 +1,7 @@
 package InterfaceGraphique;
 
 import Carte.Carte;
+import Noyau.Joueur;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,12 +12,8 @@ import javax.swing.border.Border;
 
 public class InterfaceUtilisateur extends JFrame implements Observer, ActionListener {
 
-    Carte platteau1;
-    Carte platteau2;
-    Carte platteau3;
-    Carte platteau4;
-    int tailleX;
-    int tailleY;
+    int tailleX = 10;
+    int tailleY = 10;
 
     CaseGraphique[][] cases ;
 
@@ -25,20 +22,11 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     JMenuItem charger;
 
 
-    public InterfaceUtilisateur(Carte carte){
-
-        this.platteau1 =Carte.randomCarte();
-        this.platteau2 =Carte.randomCarte();
-        this.platteau3 =Carte.randomCarte();
-        this.platteau4 =Carte.randomCarte();
-
-        this.tailleX=carte.getTailleX();
-        this.tailleY=carte.getTailleY();
-
+    public InterfaceUtilisateur(Joueur joueurA, Joueur joueurB ){
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Battleship+");
-        setSize(tailleX*2, tailleY*2);
+        this.setSize(1000, 700);
 
         JMenuBar barremenu = new JMenuBar();
         JMenu menu = new JMenu("Jeu");
@@ -62,7 +50,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         for(int i = 0; i < tailleX; i++){
             for(int j = 0; j< tailleY; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
-                platteau1.getCase(i, j).addObserver(this);
+                joueurA.getCarteBateaux().getCase(i, j).addObserver(this);
                 cases[i][j]=cg;
                 cg.setBorder(limite);
                 jc.add(cg);
@@ -74,7 +62,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         for(int i = 0; i < tailleX; i++){
             for(int j = tailleY; j< tailleY*2; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
-                platteau2.getCase(i, j-tailleY).addObserver(this);
+                joueurA.getCarteImpacts().getCase(i, j-tailleY).addObserver(this);
                 cases[i][j]=cg;
                 cg.setBorder(limite);
                 jc.add(cg);
@@ -85,7 +73,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         for(int i = tailleX; i < tailleX*2; i++){
             for(int j = 0; j< tailleY; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
-                platteau3.getCase(i-tailleX, j).addObserver(this);
+                joueurB.getCarteImpacts().getCase(i-tailleX, j).addObserver(this);
                 cases[i][j]=cg;
                 cg.setBorder(limite);
                 jc.add(cg);
@@ -96,7 +84,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         for(int i = tailleX; i < tailleX*2; i++){
             for(int j = tailleY; j< tailleY*2; j++){
                 CaseGraphique cg = new CaseGraphique(i,j, this);
-                platteau4.getCase(i-tailleX, j-tailleY).addObserver(this);
+                joueurB.getCarteBateaux().getCase(i-tailleX, j-tailleY).addObserver(this);
                 cases[i][j]=cg;
                 cg.setBorder(limite);
                 jc.add(cg);
@@ -108,24 +96,25 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         add(jc);
         setContentPane(jc);
 
-        platteau1.addObserver(this);
-        platteau2.addObserver(this);
-        platteau3.addObserver(this);
-        platteau4.addObserver(this);
+        joueurA.getCarteBateaux().addObserver(this);
+        joueurA.getCarteImpacts().addObserver(this);
+        joueurB.getCarteBateaux().addObserver(this);
+        joueurB.getCarteImpacts().addObserver(this);
+
+        this.setVisible(true);
+
+        this.updatemap(joueurA.getCarteBateaux());
+        this.updatemap(joueurA.getCarteImpacts());
+        this.updatemap(joueurB.getCarteBateaux());
+        this.updatemap(joueurB.getCarteImpacts());
     }
-
-    public static void run(){
-
-            InterfaceUtilisateur ui = new InterfaceUtilisateur(new Carte());
-            ui.setVisible(true);
-            ui.update(ui.platteau1, ui);
-
-    }
-
 
     @Override
-    @SuppressWarnings("empty-statement")
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg){
+
+    }
+
+    public void updatemap(Carte map ) {
         boolean findujeu = false;
         boolean defaite = false;
         int etat;
@@ -138,34 +127,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         for(int i=0;i<tailleX;i++)
         {
             for(int j=0;j<tailleY;j++)
-            {   id = platteau1.getCase(i, j).getID();
-                paintCase(cases[i][j], id);
-                cases[i][j].validate();
-                cases[i][j].repaint();
-            }
-        }
-        for(int i=0;i<tailleX;i++)
-        {
-            for(int j=tailleY;j<tailleY*2;j++)
-            {   id = platteau2.getCase(i, j-tailleY).getID();
-                paintCase(cases[i][j], id);
-                cases[i][j].validate();
-                cases[i][j].repaint();
-            }
-        }
-        for(int i=tailleX;i<tailleX*2;i++)
-        {
-            for(int j=0;j<tailleY;j++)
-            {   id = id = platteau3.getCase(i-tailleX, j).getID();
-                paintCase(cases[i][j], id);
-                cases[i][j].validate();
-                cases[i][j].repaint();
-            }
-        }
-        for(int i=tailleX;i<tailleX*2;i++)
-        {
-            for(int j=tailleY;j<tailleY*2;j++)
-            {   id=id = platteau4.getCase(i-tailleX, j-tailleY).getID();
+            {   id = map.verification(i,j);
                 paintCase(cases[i][j], id);
                 cases[i][j].validate();
                 cases[i][j].repaint();
@@ -187,15 +149,16 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
     }
 
-    @Override
+    //@Override
     public void actionPerformed(ActionEvent e) {
-
+/*
         if(e.getSource() == nouvellepartie){
             this.setVisible(false);
             InterfaceUtilisateur iu;
             iu = new InterfaceUtilisateur(new Carte());
             iu.setVisible(true);
         }
+
         if(e.getSource() == sauvegarder){
             //platteau1.sauvegarder();
             JOptionPane.showMessageDialog(rootPane, "La partie a été sauvegardée");
@@ -207,6 +170,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
             iu.setVisible(true);
             iu.update(platteau1, iu);
         }
+        */
 
     }
 

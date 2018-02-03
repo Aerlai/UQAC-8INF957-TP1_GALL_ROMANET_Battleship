@@ -166,4 +166,12 @@ public class ImplementationJoueur implements Joueur {
             }
         }
     }
+
+    //get carte
+    public Carte getCarteBateaux(){
+        return carteBateaux;
+    }
+    public Carte getCarteImpacts(){
+        return carteImpacts;
+    }
 }
