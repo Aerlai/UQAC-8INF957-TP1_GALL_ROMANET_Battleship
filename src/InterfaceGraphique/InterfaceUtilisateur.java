@@ -312,6 +312,14 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
             }
             for(int i=0;i<5;i++){
                 joueur.attaquer((ImplementationJoueur)adversaire,joueur.getPorteAvion(),choixtir[0],choixtir[1]);
+                if(numjoueur==0){
+                    updatemapspecifique(adversaire.getCarteBateaux(),4);
+                    updatemapspecifique(joueur.getCarteImpacts(),2);
+                }
+                if(numjoueur==1){
+                    updatemapspecifique(adversaire.getCarteBateaux(),1);
+                    updatemapspecifique(joueur.getCarteImpacts(),3);
+                }
             }
             if(!adversaire.estVivant()){
                 fin=true;
