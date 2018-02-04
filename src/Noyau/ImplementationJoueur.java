@@ -44,6 +44,8 @@ public class ImplementationJoueur implements Joueur {
             this.carteImpacts.placerImpactBateau(x,y);
             bateauAttaquant.attaquer(joueur, x, y);
         }
+        joueur.inspectionBateaux();
+        tourFini();
     }
 
     // Déplacement durant la partie
@@ -286,9 +288,87 @@ public class ImplementationJoueur implements Joueur {
         }
     }
 
+    public int subit(int x, int y){
+        return this.carteBateaux.subitAttaque(x,y);
+    }
+
     public void tourFini(){
         this.bateauactuel++;
         if(this.bateauactuel>5)this.bateauactuel=0;
+    }
+
+    public void inspectionBateau(Bateau bateau){
+        if(bateau.isMort()){
+            this.perdBateau(bateau);
+        }
+    }
+
+    public void inspectionBateaux(){
+        if(porteAvion!=null&&porteAvion.isMort()){
+            this.perdBateau(porteAvion);
+            porteAvion=null;
+        }
+        if(torpilleur!=null&&torpilleur.isMort()){
+            this.perdBateau(torpilleur);
+            torpilleur=null;
+        }
+        if(contreTorpilleur!=null&&contreTorpilleur.isMort()){
+            this.perdBateau(contreTorpilleur);
+            contreTorpilleur=null;
+        }
+        if(sousMarin!=null&&sousMarin.isMort()){
+            this.perdBateau(sousMarin);
+            sousMarin=null;
+        }
+        if(croiseur!=null&&croiseur.isMort()){
+            this.perdBateau(croiseur);
+            croiseur=null;
+        }
+    }
+
+    public boolean estVivant(){
+        return !((porteAvion==null)&&(torpilleur==null)&&(contreTorpilleur==null)&&(sousMarin==null)&&(croiseur==null));
+    }
+
+    public Bateau getBateauEnJeu(){
+        switch(bateauactuel){
+            case 1 : return porteAvion;
+            case 2 : return croiseur;
+            case 3 : return contreTorpilleur;
+            case 4 : return sousMarin;
+            case 5 : return torpilleur;
+        }
+        return null;
+    }
+
+    public void perdBateau(Bateau titanic){
+        if(titanic.getId()==1){
+            carteBateaux.videCase(titanic.getB1X(),titanic.getB1Y());
+            carteBateaux.videCase(titanic.getB2X(),titanic.getB2Y());
+            carteBateaux.videCase(titanic.getB3X(),titanic.getB3Y());
+            carteBateaux.videCase(titanic.getB4X(),titanic.getB4Y());
+            carteBateaux.videCase(titanic.getB5X(),titanic.getB5Y());
+        }
+        if(titanic.getId()==2){
+            carteBateaux.videCase(titanic.getB1X(),titanic.getB1Y());
+            carteBateaux.videCase(titanic.getB2X(),titanic.getB2Y());
+            carteBateaux.videCase(titanic.getB3X(),titanic.getB3Y());
+            carteBateaux.videCase(titanic.getB4X(),titanic.getB4Y());
+        }
+        if(titanic.getId()==3){
+            carteBateaux.videCase(titanic.getB1X(),titanic.getB1Y());
+            carteBateaux.videCase(titanic.getB2X(),titanic.getB2Y());
+            carteBateaux.videCase(titanic.getB3X(),titanic.getB3Y());
+        }
+        if(titanic.getId()==4){
+            carteBateaux.videCase(titanic.getB1X(),titanic.getB1Y());
+            carteBateaux.videCase(titanic.getB2X(),titanic.getB2Y());
+            carteBateaux.videCase(titanic.getB3X(),titanic.getB3Y());
+        }
+        if(titanic.getId()==5){
+            carteBateaux.videCase(titanic.getB1X(),titanic.getB1Y());
+            carteBateaux.videCase(titanic.getB2X(),titanic.getB2Y());
+        }
     }
 
     //get carte
@@ -297,5 +377,8 @@ public class ImplementationJoueur implements Joueur {
     }
     public Carte getCarteImpacts(){
         return carteImpacts;
+    }
+    public ImplementationJoueur getJoueur(){
+        return this;
     }
 }

@@ -1,6 +1,7 @@
 package InterfaceGraphique;
 
 import Carte.Carte;
+import Noyau.ImplementationJoueur;
 import Noyau.Joueur;
 
 import java.awt.*;
@@ -144,14 +145,16 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         int tourjoueur=0;
         while(!fin){
             if(tourjoueur==0){
-                tour(joueurA, tourjoueur);
+                tour(joueurA, tourjoueur, joueurB);
             }
             if(tourjoueur==1){
-                tour(joueurB, tourjoueur);
+                tour(joueurB, tourjoueur, joueurA);
             }
             tourjoueur++;
             if(tourjoueur>1)tourjoueur=0;
         }
+        fin();
+        this.setVisible(false);
     }
 
     @Override
@@ -274,7 +277,12 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
     }
 
-    public void tour(Joueur joueur, int numjoueur){
+    public void fin(){
+        String texte = "Le jeu est fini !";
+        JOptionPane.showInputDialog(texte);
+    }
+
+    public void tour(Joueur joueur, int numjoueur, Joueur adversaire){
         String choixdujoueur;
         int choix;
         String nomjoueur="";
@@ -293,9 +301,26 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         if(choix==3){
             joueur.tourFini();return;
         }
+        if(choix==1){
+            int choixtir[]= new int[2];
+            choixtir[0]=-1;choixtir[1]=-1;
+            while(choixtir[0]<0||choixtir[0]>tailleY||choixtir[1]<0||choixtir[1]>tailleY){
+                Texte = nomjoueur+", Quelle est la coordonnée à viser ?\n";
+                choixdujoueur = JOptionPane.showInputDialog(Texte);
+                choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+            }
+            for(int i=0;i<5;i++){
+                joueur.attaquer(adversaire,joueur.getBateauEnJeu(),choixtir[0],choixtir[1]);
+            }
+            if(!adversaire.estVivant()){
+                fin=true;
+            }
+        }
 
 
     }
+
 
     //@Override
     public void actionPerformed(ActionEvent e) {

@@ -118,6 +118,16 @@ public class Carte extends Observable {
         placerBateau(joueur.torpilleur.getB2X(),joueur.torpilleur.getB2Y(), 5, false);
     }
 
+    public int subitAttaque(int x, int y){
+        int verification = verification(x,y);
+
+        if(verification!=0){
+
+        }
+
+        return 0;
+    }
+
     public int getTailleX() {
         return TailleX;
     }
@@ -134,7 +144,13 @@ public class Carte extends Observable {
         this.tailleY = tailleY;
     }
 
+    public void videCase(int x, int y){
+        this.matrice[x][y] = new Element(false, false, 6);
+    }
+
     public Element getCase(int x, int y){
         return this.matrice[x][y];
     }
+
+
 }

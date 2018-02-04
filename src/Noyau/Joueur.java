@@ -13,6 +13,8 @@ public interface Joueur {
     void placergauche(int id, int x, int y);
     void placerdroite(int id, int x, int y);
     void tourFini();
+    boolean estVivant();
+    Bateau getBateauEnJeu();
 
     Carte getCarteBateaux();
     Carte getCarteImpacts();
