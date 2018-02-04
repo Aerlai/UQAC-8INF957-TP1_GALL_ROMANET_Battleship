@@ -15,6 +15,9 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     int tailleX = 10;
     int tailleY = 10;
 
+    Joueur joueurA;
+    Joueur joueurB;
+
     CaseGraphique[][] cases1 ;
     CaseGraphique[][] cases2 ;
     CaseGraphique[][] cases3 ;
@@ -26,6 +29,9 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
 
     public InterfaceUtilisateur(Joueur joueurA, Joueur joueurB ){
+
+        this.joueurA=joueurA;
+        this.joueurB=joueurB;
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Battleship+");
@@ -51,6 +57,12 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         JComponent jc2 = new JPanel (new GridLayout(tailleY, tailleX));
         JComponent jc3 = new JPanel (new GridLayout(tailleY, tailleX));
         JComponent jc4 = new JPanel (new GridLayout(tailleY, tailleX));
+        /*JPanel labelA = new JPanel();
+        labelA.add(new Label("Joueur A"));
+        JPanel labelB = new JPanel();
+        labelB.add(new Label("Joueur B"));*/
+
+
 
         Border limitecase = BorderFactory.createLineBorder(Color.black,1);
         Border limitegrille = BorderFactory.createLineBorder(Color.black,7);
@@ -107,25 +119,30 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
         jc4.setBorder(limitegrille);
 
+        //labelA.setPreferredSize(new Dimension(tailleX, tailleY/10));
 
         mainjc.add(jc1);
         mainjc.add(jc2);
+        //mainjc.add(labelA);
+        //mainjc.add(labelB);
         mainjc.add(jc3);
         mainjc.add(jc4);
         add(mainjc);
         setContentPane(mainjc);
 
-        joueurA.getCarteBateaux().addObserver(this);
+        /*joueurA.getCarteBateaux().addObserver(this);
         joueurA.getCarteImpacts().addObserver(this);
         joueurB.getCarteBateaux().addObserver(this);
-        joueurB.getCarteImpacts().addObserver(this);
+        joueurB.getCarteImpacts().addObserver(this);*/
 
         this.setVisible(true);
 
-        this.updatemap(joueurA.getCarteBateaux());
-        this.updatemap(joueurA.getCarteImpacts());
-        this.updatemap(joueurB.getCarteBateaux());
-        this.updatemap(joueurB.getCarteImpacts());
+        this.updatemapspecifique(joueurA.getCarteBateaux(),1);
+        this.updatemapspecifique(joueurA.getCarteImpacts(),2);
+        this.updatemapspecifique(joueurB.getCarteBateaux(),4);
+        this.updatemapspecifique(joueurB.getCarteImpacts(),3);
+        ajoutBateaux(joueurA,1);
+        ajoutBateaux(joueurB,2);
     }
 
     @Override
@@ -134,15 +151,37 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
     }
 
+    public void updatemapspecifique(Carte map, int numcarte) {
+        int id=0;
+        for(int i=0;i<tailleX;i++)
+        {
+            for(int j=0;j<tailleY;j++)
+            {   id = map.verification(i,j);
+                if(numcarte==1){
+                    paintCase(cases1[i][j], id);
+                    cases1[i][j].validate();
+                    cases1[i][j].repaint();
+                }
+                if(numcarte==2){
+                    paintCase(cases2[i][j], id);
+                    cases2[i][j].validate();
+                    cases2[i][j].repaint();
+                }
+                if(numcarte==3){
+                    paintCase(cases3[i][j], id);
+                    cases3[i][j].validate();
+                    cases3[i][j].repaint();
+                }
+                if(numcarte==4){
+                    paintCase(cases4[i][j], id);
+                    cases4[i][j].validate();
+                    cases4[i][j].repaint();
+                }
+            }
+        }
+    }
+
     public void updatemap(Carte map ) {
-        boolean findujeu = false;
-        boolean defaite = false;
-        int etat;
-        JLabel label;
-        String texte;
-
-
-
         int id=0;
         for(int i=0;i<tailleX;i++)
         {
@@ -162,20 +201,59 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
                 cases4[i][j].repaint();
             }
         }
-
     }
 
     public void paintCase(CaseGraphique casegraphique, int id){
 
         switch (id){
-            case 1:casegraphique.setBackground(Color.GRAY);break;
-            case 2:casegraphique.setBackground(Color.GRAY);break;
-            case 3:casegraphique.setBackground(Color.GRAY);break;
-            case 4:casegraphique.setBackground(Color.GRAY);break;
+            case 1:casegraphique.setBackground(Color.BLUE);break;
+            case 2:casegraphique.setBackground(Color.GREEN);break;
+            case 3:casegraphique.setBackground(Color.YELLOW);break;
+            case 4:casegraphique.setBackground(Color.MAGENTA);break;
             case 5:casegraphique.setBackground(Color.RED);break;
             case 6:casegraphique.setBackground(Color.GRAY);break;
             default:casegraphique.setBackground(Color.GRAY);break;
         }
+    }
+
+    public void ajoutBateaux(Joueur joueur, int numjoueur){
+
+        String choixdujoueur;
+        String bateaux[] = new String[5];
+        bateaux[0] ="Torpilleur";
+        bateaux[1] ="SousMarin";
+        bateaux[2] ="Croiseur";
+        bateaux[3] ="ContreTorpilleur";
+        bateaux[4] ="PorteAvion";
+        int idbateau=0;
+        int choix[] = new int[2];
+
+        for(int i=0;i<bateaux.length;i++){
+            choix[0]=-1;choix[1]=-1;
+            while(choix[0]<0||choix[0]>tailleY||choix[1]<0||choix[1]>tailleY){
+                String Texte = "Placer  le " + bateaux[i] + "(merci d'utiliser le format \"x y\"\n";
+                choixdujoueur = JOptionPane.showInputDialog(Texte);
+                choix[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                choix[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+            }
+            switch (bateaux[i]){
+                case "Torpilleur":idbateau=5;break;
+                case "SousMarin":idbateau=4;break;
+                case "Croiseur":idbateau=2;break;
+                case "ContreTorpilleur":idbateau=3;break;
+                case "PorteAvion":idbateau=1;break;
+            }
+            System.out.println("idbateau : "+ idbateau);
+            joueur.placerhaut(idbateau,choix[0],choix[1]);
+            if(numjoueur==1){
+                this.updatemapspecifique(joueur.getCarteBateaux(),1);
+            }
+            if(numjoueur==2){
+                this.updatemapspecifique(joueur.getCarteBateaux(),4);
+
+            }
+        }
+
     }
 
     //@Override

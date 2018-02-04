@@ -68,6 +68,38 @@ public class ImplementationJoueur implements Joueur {
 
     }
 
+    public void placerhaut(int id, int x, int y){
+        switch (id){
+
+            case 1:
+                for(int i=0;i<5;i++){
+                    placer(1,i+1,x+i,y);
+                }
+            break;
+            case 2:
+                for(int i=0;i<4;i++){
+                    placer(2,i+1,x+i,y);
+                }
+                break;
+            case 3:
+                for(int i=0;i<3;i++){
+                    placer(3,i+1,x+i,y);
+                }
+                break;
+            case 4:
+                for(int i=0;i<3;i++){
+                    placer(4,i+1,x+i,y);
+                }
+                break;
+            case 5:
+                for(int i=0;i<2;i++){
+                    placer(5,i+1,x+i,y);
+                }
+                break;
+
+        }
+    }
+
     // Placement initial des bateaux par le joueur
     public void placer(int id, int bloc, int x, int y){
         if(id ==1){ // porte avion
