@@ -151,7 +151,6 @@ public class Bateau {
 
     // methode perte 1 point de vie
     public void pertePointDeVie(){
-        System.out.println("Bateau touche ! vie restante : "+vie);
         vie--;
         if( vie <= 0) mort = true;
         System.out.println("Bateau touche ! vie restante : "+vie);

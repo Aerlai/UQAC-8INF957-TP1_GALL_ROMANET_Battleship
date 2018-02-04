@@ -306,39 +306,28 @@ public class ImplementationJoueur implements Joueur {
     public void inspectionBateaux(){
         if(porteAvion!=null&&porteAvion.isMort()){
             this.perdBateau(porteAvion);
-            porteAvion=null;
+            //porteAvion=null;
         }
         if(torpilleur!=null&&torpilleur.isMort()){
             this.perdBateau(torpilleur);
-            torpilleur=null;
+            //torpilleur=null;
         }
         if(contreTorpilleur!=null&&contreTorpilleur.isMort()){
             this.perdBateau(contreTorpilleur);
-            contreTorpilleur=null;
+            //contreTorpilleur=null;
         }
         if(sousMarin!=null&&sousMarin.isMort()){
             this.perdBateau(sousMarin);
-            sousMarin=null;
+            //sousMarin=null;
         }
         if(croiseur!=null&&croiseur.isMort()){
             this.perdBateau(croiseur);
-            croiseur=null;
+            //croiseur=null;
         }
     }
 
     public boolean estVivant(){
-        return !((porteAvion==null)&&(torpilleur==null)&&(contreTorpilleur==null)&&(sousMarin==null)&&(croiseur==null));
-    }
-
-    public Bateau getBateauEnJeu(){
-        switch(bateauactuel){
-            case 1 : return porteAvion;
-            case 2 : return croiseur;
-            case 3 : return contreTorpilleur;
-            case 4 : return sousMarin;
-            case 5 : return torpilleur;
-        }
-        return null;
+        return !((porteAvion.isMort()==true)&&(torpilleur.isMort()==true)&&(contreTorpilleur.isMort()==true)&&(sousMarin.isMort()==true)&&(croiseur.isMort()==true));
     }
 
     public void perdBateau(Bateau titanic){
@@ -382,5 +371,22 @@ public class ImplementationJoueur implements Joueur {
         return this;
     }
 
-    public Bateau getPorteAvion(){ return this.porteAvion;}
+    // get bateaux
+    public Bateau getPorteAvion() {
+        return porteAvion;
+    }
+    public Bateau getContreTorpilleur() {
+        return contreTorpilleur;
+    }
+    public Bateau getCroiseur() {
+        return croiseur;
+    }
+    public Bateau getTorpilleur(){
+        return torpilleur;
+    }
+    public Bateau getSousMarrin(){
+        return sousMarin;
+    }
+
+
 }

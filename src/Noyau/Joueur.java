@@ -14,10 +14,15 @@ public interface Joueur {
     void placerdroite(int id, int x, int y);
     void tourFini();
     boolean estVivant();
-    Bateau getBateauEnJeu();
 
     Carte getCarteBateaux();
     Carte getCarteImpacts();
 
     Bateau getPorteAvion();
+    Bateau getContreTorpilleur();
+    Bateau getCroiseur();
+    Bateau getTorpilleur();
+    Bateau getSousMarrin();
+
+
 }
