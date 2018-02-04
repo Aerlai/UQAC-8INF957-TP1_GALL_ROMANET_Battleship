@@ -18,4 +18,6 @@ public interface Joueur {
 
     Carte getCarteBateaux();
     Carte getCarteImpacts();
+
+    Bateau getPorteAvion();
 }

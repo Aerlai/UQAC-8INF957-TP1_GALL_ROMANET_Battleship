@@ -311,7 +311,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
                 choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
             }
             for(int i=0;i<5;i++){
-                joueur.attaquer(adversaire,joueur.getBateauEnJeu(),choixtir[0],choixtir[1]);
+                joueur.attaquer((ImplementationJoueur)adversaire,joueur.getPorteAvion(),choixtir[0],choixtir[1]);
             }
             if(!adversaire.estVivant()){
                 fin=true;

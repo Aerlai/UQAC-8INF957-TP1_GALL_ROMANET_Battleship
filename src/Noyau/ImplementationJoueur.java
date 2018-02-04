@@ -381,4 +381,6 @@ public class ImplementationJoueur implements Joueur {
     public ImplementationJoueur getJoueur(){
         return this;
     }
+
+    public Bateau getPorteAvion(){ return this.porteAvion;}
 }
