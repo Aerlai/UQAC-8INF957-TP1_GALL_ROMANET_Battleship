@@ -9,6 +9,11 @@ public interface Joueur {
     void tourner( Bateau ship);
     void placer(int id, int bloc, int x, int y);
     void placerhaut(int id, int x, int y);
+    void placerbas(int id, int x, int y);
+    void placergauche(int id, int x, int y);
+    void placerdroite(int id, int x, int y);
+    void tourFini();
+
     Carte getCarteBateaux();
     Carte getCarteImpacts();
 }

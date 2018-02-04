@@ -15,9 +15,6 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     int tailleX = 10;
     int tailleY = 10;
 
-    Joueur joueurA;
-    Joueur joueurB;
-
     CaseGraphique[][] cases1 ;
     CaseGraphique[][] cases2 ;
     CaseGraphique[][] cases3 ;
@@ -27,11 +24,10 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     JMenuItem sauvegarder;
     JMenuItem charger;
 
+    boolean fin;
+
 
     public InterfaceUtilisateur(Joueur joueurA, Joueur joueurB ){
-
-        this.joueurA=joueurA;
-        this.joueurB=joueurB;
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Battleship+");
@@ -143,6 +139,19 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         this.updatemapspecifique(joueurB.getCarteImpacts(),3);
         ajoutBateaux(joueurA,1);
         ajoutBateaux(joueurB,2);
+
+        fin=false;
+        int tourjoueur=0;
+        while(!fin){
+            if(tourjoueur==0){
+                tour(joueurA, tourjoueur);
+            }
+            if(tourjoueur==1){
+                tour(joueurB, tourjoueur);
+            }
+            tourjoueur++;
+            if(tourjoueur>1)tourjoueur=0;
+        }
     }
 
     @Override
@@ -219,6 +228,9 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     public void ajoutBateaux(Joueur joueur, int numjoueur){
 
         String choixdujoueur;
+        String nomjoueur="";
+        if(numjoueur-1==0)nomjoueur="JOUEUR A";
+        if(numjoueur-1==1)nomjoueur="JOUEUR B";
         String bateaux[] = new String[5];
         bateaux[0] ="Torpilleur";
         bateaux[1] ="SousMarin";
@@ -227,14 +239,16 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         bateaux[4] ="PorteAvion";
         int idbateau=0;
         int choix[] = new int[2];
+        String emplacementtete = "";
 
         for(int i=0;i<bateaux.length;i++){
             choix[0]=-1;choix[1]=-1;
             while(choix[0]<0||choix[0]>tailleY||choix[1]<0||choix[1]>tailleY){
-                String Texte = "Placer  le " + bateaux[i] + "(merci d'utiliser le format \"x y\"\n";
+                String Texte = nomjoueur+", placer  le " + bateaux[i] + " (merci d'utiliser le format \"x y POSITION\" avec position= H B G D\n";
                 choixdujoueur = JOptionPane.showInputDialog(Texte);
                 choix[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
                 choix[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                emplacementtete=choixdujoueur.split(" ")[2];
             }
             switch (bateaux[i]){
                 case "Torpilleur":idbateau=5;break;
@@ -244,7 +258,12 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
                 case "PorteAvion":idbateau=1;break;
             }
             System.out.println("idbateau : "+ idbateau);
-            joueur.placerhaut(idbateau,choix[0],choix[1]);
+            switch(emplacementtete){
+                case "H":joueur.placerhaut(idbateau,choix[0],choix[1]);break;
+                case "B":joueur.placerbas(idbateau,choix[0],choix[1]);break;
+                case "G":joueur.placergauche(idbateau,choix[0],choix[1]);break;
+                case "D":joueur.placerdroite(idbateau,choix[0],choix[1]);break;
+            }
             if(numjoueur==1){
                 this.updatemapspecifique(joueur.getCarteBateaux(),1);
             }
@@ -253,6 +272,28 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
             }
         }
+    }
+
+    public void tour(Joueur joueur, int numjoueur){
+        String choixdujoueur;
+        int choix;
+        String nomjoueur="";
+        if(numjoueur==0)nomjoueur="JOUEUR A";
+        if(numjoueur==1)nomjoueur="JOUEUR B";
+        String Texte = "Choisissez une action "+nomjoueur+" :\n";
+        Texte+= "1 : TIR \n";
+        Texte+= "2 : DEPLACEMENT \n";
+        Texte+= "3 : PASSER LE TOUR\n";
+        do
+        {
+            choixdujoueur = JOptionPane.showInputDialog(Texte);
+            choix = Integer.parseInt(choixdujoueur);
+        }while(choix!=1 && choix!=2 && choix!=3);
+
+        if(choix==3){
+            joueur.tourFini();return;
+        }
+
 
     }
 

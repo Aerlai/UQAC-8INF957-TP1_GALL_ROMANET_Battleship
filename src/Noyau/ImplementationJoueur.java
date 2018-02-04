@@ -6,6 +6,7 @@ import Carte.Carte;
 public class ImplementationJoueur implements Joueur {
     // Nom du joueur
     String nom;
+    int bateauactuel;
 
     // Création de 2 cartes :
     // - 1 Carte de placement des bateaux
@@ -30,6 +31,7 @@ public class ImplementationJoueur implements Joueur {
         contreTorpilleur = new ContreTorpilleur();
         sousMarin = new SousMarin();
         torpilleur = new Torpilleur();
+        bateauactuel=0;
     }
 
     // attaque d'une position de l'adversaire
@@ -68,9 +70,8 @@ public class ImplementationJoueur implements Joueur {
 
     }
 
-    public void placerhaut(int id, int x, int y){
+    public void placerhaut(int id, int x, int y){ //place la tete du bateau aux coordonnees indiquees
         switch (id){
-
             case 1:
                 for(int i=0;i<5;i++){
                     placer(1,i+1,x+i,y);
@@ -96,7 +97,93 @@ public class ImplementationJoueur implements Joueur {
                     placer(5,i+1,x+i,y);
                 }
                 break;
-
+        }
+    }
+    public void placerbas(int id, int x, int y){ //place la tete du bateau aux coordonnees indiquees
+        switch (id){
+            case 1:
+                for(int i=0;i<5;i++){
+                    placer(1,i+1,x-i,y);
+                }
+                break;
+            case 2:
+                for(int i=0;i<4;i++){
+                    placer(2,i+1,x-i,y);
+                }
+                break;
+            case 3:
+                for(int i=0;i<3;i++){
+                    placer(3,i+1,x-i,y);
+                }
+                break;
+            case 4:
+                for(int i=0;i<3;i++){
+                    placer(4,i+1,x-i,y);
+                }
+                break;
+            case 5:
+                for(int i=0;i<2;i++){
+                    placer(5,i+1,x-i,y);
+                }
+                break;
+        }
+    }
+    public void placergauche(int id, int x, int y){ //place la tete du bateau aux coordonnees indiquees, le reste a sa droite
+        switch (id){
+            case 1:
+                for(int i=0;i<5;i++){
+                    placer(1,i+1,x,y+i);
+                }
+                break;
+            case 2:
+                for(int i=0;i<4;i++){
+                    placer(2,i+1,x,y+i);
+                }
+                break;
+            case 3:
+                for(int i=0;i<3;i++){
+                    placer(3,i+1,x,y+i);
+                }
+                break;
+            case 4:
+                for(int i=0;i<3;i++){
+                    placer(4,i+1,x,y+i);
+                }
+                break;
+            case 5:
+                for(int i=0;i<2;i++){
+                    placer(5,i+1,x,y+i);
+                }
+                break;
+        }
+    }
+    public void placerdroite(int id, int x, int y){ //place la tete du bateau aux coordonnees indiquees le reste à sa gauche
+        switch (id){
+            case 1:
+                for(int i=0;i<5;i++){
+                    placer(1,i+1,x,y-i);
+                }
+                break;
+            case 2:
+                for(int i=0;i<4;i++){
+                    placer(2,i+1,x,y-i);
+                }
+                break;
+            case 3:
+                for(int i=0;i<3;i++){
+                    placer(3,i+1,x,y-i);
+                }
+                break;
+            case 4:
+                for(int i=0;i<3;i++){
+                    placer(4,i+1,x,y-i);
+                }
+                break;
+            case 5:
+                for(int i=0;i<2;i++){
+                    placer(5,i+1,x,y-i);
+                }
+                break;
         }
     }
 
@@ -197,6 +284,11 @@ public class ImplementationJoueur implements Joueur {
                 carteBateaux.placerBateau(x,y,5,false);
             }
         }
+    }
+
+    public void tourFini(){
+        this.bateauactuel++;
+        if(this.bateauactuel>5)this.bateauactuel=0;
     }
 
     //get carte
