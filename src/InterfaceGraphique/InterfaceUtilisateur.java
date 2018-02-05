@@ -296,12 +296,19 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
                 joueur.tourFini();
                 return;
             }
+            if (choix == 2) {
+                deplacer(joueur, numjoueur, adversaire);
+            }
             if (choix == 1) {
                 attaque(joueur, numjoueur, adversaire);
             }
         }catch (Exception e){
             System.out.println("Mauvaise expression");
         }
+    }
+
+    private void deplacer(Joueur joueur, int numjoueur, Joueur adversaire){
+
     }
 
     private void attaque(Joueur joueur, int numjoueur, Joueur adversaire){
