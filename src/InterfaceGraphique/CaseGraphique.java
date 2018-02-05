@@ -24,18 +24,17 @@ public class CaseGraphique extends JPanel {
         setBackground(Color.white);
         setLayout(new BorderLayout());
 
+
         addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseEntered(MouseEvent arg0) {
                 super.mouseClicked(arg0);
-               // if (vue.platteau1.getCase(id).getEtat()==0){}
             }
 
             @Override
             public void mouseExited(MouseEvent arg0) {
                 super.mouseExited(arg0);
-                //if (vue.platteau1.getCase(id).getEtat()!=0);
             }
 
             @Override

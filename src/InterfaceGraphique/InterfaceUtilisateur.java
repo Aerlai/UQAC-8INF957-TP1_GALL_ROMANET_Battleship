@@ -16,16 +16,16 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
     int tailleX = 10;
     int tailleY = 10;
 
-    CaseGraphique[][] cases1 ;
-    CaseGraphique[][] cases2 ;
-    CaseGraphique[][] cases3 ;
-    CaseGraphique[][] cases4 ;
+    CaseGraphique[][] cases1 ;//Grille Bateaux joueurA
+    CaseGraphique[][] cases2 ;//Grille Impacts joueurA
+    CaseGraphique[][] cases3 ;//Grille Impacts joueurB
+    CaseGraphique[][] cases4 ;//Grille Bateaux joueurB
 
     JMenuItem nouvellepartie;
     JMenuItem sauvegarder;
     JMenuItem charger;
 
-    boolean fin;
+    boolean fin; //indicateur si la partie est terminée ou non
 
 
     public InterfaceUtilisateur(Joueur joueurA, Joueur joueurB ){
@@ -37,14 +37,13 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         JMenuBar barremenu = new JMenuBar();
         JMenu menu = new JMenu("Jeu");
 
+        //la barre de menu avec les éléments ci dessous n'est pas encore fonctionnelle
         nouvellepartie = new JMenuItem("Nouvelle Partie");
         nouvellepartie.addActionListener(this);
         sauvegarder = new JMenuItem("Sauvegarder");
         sauvegarder.addActionListener(this);
-
         menu.add(nouvellepartie);
         menu.add(sauvegarder);
-
         barremenu.add(menu);
         setJMenuBar(barremenu);
 
@@ -54,10 +53,6 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         JComponent jc2 = new JPanel (new GridLayout(tailleY, tailleX));
         JComponent jc3 = new JPanel (new GridLayout(tailleY, tailleX));
         JComponent jc4 = new JPanel (new GridLayout(tailleY, tailleX));
-        /*JPanel labelA = new JPanel();
-        labelA.add(new Label("Joueur A"));
-        JPanel labelB = new JPanel();
-        labelB.add(new Label("Joueur B"));*/
 
 
 
@@ -116,8 +111,6 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
         jc4.setBorder(limitegrille);
 
-        //labelA.setPreferredSize(new Dimension(tailleX, tailleY/10));
-
         mainjc.add(jc1);
         mainjc.add(jc2);
         //mainjc.add(labelA);
@@ -163,6 +156,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
     }
 
+    //Ici on met à jour une grille de l'interface specifique en fonction de la carte du jeu qui lui correspond
     public void updatemapspecifique(Carte map, int numcarte) {
         int id=0;
         for(int i=0;i<tailleX;i++)
@@ -193,24 +187,23 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
     }
 
+    //Repeint une case en fonction de son contenu
     public void paintCase(CaseGraphique casegraphique, int id){
-
         switch (id){
-            case 1:casegraphique.setBackground(Color.BLUE);break;
-            case 2:casegraphique.setBackground(Color.GREEN);break;
-            case 3:casegraphique.setBackground(Color.YELLOW);break;
-            case 4:casegraphique.setBackground(Color.MAGENTA);break;
-            case 5:casegraphique.setBackground(Color.RED);break;
-            case 6:casegraphique.setBackground(Color.GRAY);break;
-            case 7:casegraphique.setBackground(Color.ORANGE);break;
-            case 8:casegraphique.setBackground(Color.PINK);break;
-
+            case 1:casegraphique.setBackground(Color.BLUE);break; //porteAvion
+            case 2:casegraphique.setBackground(Color.GREEN);break; //croiseur
+            case 3:casegraphique.setBackground(Color.YELLOW);break; //contreTorpilleur
+            case 4:casegraphique.setBackground(Color.MAGENTA);break; //sousMarin
+            case 5:casegraphique.setBackground(Color.PINK);break; //Torpilleur
+            case 6:casegraphique.setBackground(Color.GRAY);break; //vide
+            case 7:casegraphique.setBackground(Color.ORANGE);break; //impact
+            case 8:casegraphique.setBackground(Color.RED);break;   //impact sur bateau
 
             default:casegraphique.setBackground(Color.GRAY);break;
         }
     }
 
-    public void ajoutBateaux(Joueur joueur, int numjoueur){
+    public void ajoutBateaux(Joueur joueur, int numjoueur){  //Cette procédure permet à un joueur de placer tous ses bateaux un par un
 
         String choixdujoueur;
         String nomjoueur="";
@@ -270,12 +263,12 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
     }
 
-    public void fin(){
+    public void fin(){  //Cette fonction affiche un message de fin du jeu
         String texte = "Le jeu est fini !";
         JOptionPane.showInputDialog(texte);
     }
 
-    public void tour(Joueur joueur, int numjoueur, Joueur adversaire){
+    public void tour(Joueur joueur, int numjoueur, Joueur adversaire){ //demande à un joueur ce qu'il veut faire durant son tour et execute son choix
         String choixdujoueur;
         int choix;
         String nomjoueur="";
@@ -307,10 +300,11 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         }
     }
 
-    private void deplacer(Joueur joueur, int numjoueur, Joueur adversaire){
+    private void deplacer(Joueur joueur, int numjoueur, Joueur adversaire){ //TODO
 
     }
 
+    //Si il choisit de tirer cette fonction permet au joueur d'attaquer avec chacun de ses navires restants un par un
     private void attaque(Joueur joueur, int numjoueur, Joueur adversaire){
         int choixtir[]= new int[2];
         String choixdujoueur="";
@@ -492,47 +486,7 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
     //@Override
     public void actionPerformed(ActionEvent e) {
-/*
-        if(e.getSource() == nouvellepartie){
-            this.setVisible(false);
-            InterfaceUtilisateur iu;
-            iu = new InterfaceUtilisateur(new Carte());
-            iu.setVisible(true);
-        }
-
-        if(e.getSource() == sauvegarder){
-            //platteau1.sauvegarder();
-            JOptionPane.showMessageDialog(rootPane, "La partie a été sauvegardée");
-        }
-        if(e.getSource() == charger){
-            this.setVisible(false);
-            InterfaceUtilisateur iu;
-            iu = new InterfaceUtilisateur(new Carte());
-            iu.setVisible(true);
-            iu.update(platteau1, iu);
-        }
-        */
-
     }
 
 }
-
-    /*public InterfaceUtilisater(){
-        //Définit un titre pour notre fenêtre
-        this.setTitle("BattleShip+");
-        //Définit sa taille : 400 pixels de large et 100 pixels de haut
-        this.setSize(1000, 700);
-        //Nous demandons maintenant à notre objet de se positionner au centre
-        this.setLocationRelativeTo(null);
-        //Termine le processus lorsqu'on clique sur la croix rouge
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //On limite le resize
-        this.setResizable(false);
-
-        this.setContentPane(new PlateauDouble());
-
-        //On rend la fenetre visible
-        this.setVisible(true);
-    }*/
-
 
