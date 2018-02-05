@@ -224,33 +224,44 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
 
         for(int i=0;i<bateaux.length;i++){
             choix[0]=-1;choix[1]=-1;
-            while(choix[0]<0||choix[0]>tailleY||choix[1]<0||choix[1]>tailleY){
-                String Texte = nomjoueur+", placer  le " + bateaux[i] + " (merci d'utiliser le format \"x y POSITION\" avec position= H B G D\n";
-                choixdujoueur = JOptionPane.showInputDialog(Texte);
-                choix[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                choix[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
-                emplacementtete=choixdujoueur.split(" ")[2];
-            }
-            switch (bateaux[i]){
-                case "Torpilleur":idbateau=5;break;
-                case "SousMarin":idbateau=4;break;
-                case "Croiseur":idbateau=2;break;
-                case "ContreTorpilleur":idbateau=3;break;
-                case "PorteAvion":idbateau=1;break;
-            }
-            System.out.println("idbateau : "+ idbateau);
-            switch(emplacementtete){
-                case "H":joueur.placerhaut(idbateau,choix[0],choix[1]);break;
-                case "B":joueur.placerbas(idbateau,choix[0],choix[1]);break;
-                case "G":joueur.placergauche(idbateau,choix[0],choix[1]);break;
-                case "D":joueur.placerdroite(idbateau,choix[0],choix[1]);break;
-            }
-            if(numjoueur==1){
-                this.updatemapspecifique(joueur.getCarteBateaux(),1);
-            }
-            if(numjoueur==2){
-                this.updatemapspecifique(joueur.getCarteBateaux(),4);
+            boolean valid;
+            valid = true;
+            while(valid) {
+                try {
+                    while (choix[0] < 0 || choix[0] > tailleY || choix[1] < 0 || choix[1] > tailleY) {
+                        String Texte = nomjoueur + ", placer  le " + bateaux[i] + " (merci d'utiliser le format \"x y POSITION\" avec position= H B G D\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        if(choixdujoueur == null) System.exit(0);
+                        choix[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choix[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                        emplacementtete = choixdujoueur.split(" ")[2];
+                    }
+                    valid = false;
 
+                    switch (bateaux[i]){
+                        case "Torpilleur":idbateau=5;break;
+                        case "SousMarin":idbateau=4;break;
+                        case "Croiseur":idbateau=2;break;
+                        case "ContreTorpilleur":idbateau=3;break;
+                        case "PorteAvion":idbateau=1;break;
+                    }
+                    System.out.println("idbateau : "+ idbateau);
+                    switch(emplacementtete){
+                        case "H":joueur.placerhaut(idbateau,choix[0],choix[1]);break;
+                        case "B":joueur.placerbas(idbateau,choix[0],choix[1]);break;
+                        case "G":joueur.placergauche(idbateau,choix[0],choix[1]);break;
+                        case "D":joueur.placerdroite(idbateau,choix[0],choix[1]);break;
+                    }
+                    if(numjoueur==1){
+                        this.updatemapspecifique(joueur.getCarteBateaux(),1);
+                    }
+                    if(numjoueur==2){
+                        this.updatemapspecifique(joueur.getCarteBateaux(),4);
+
+                    }
+                } catch (Exception e) {
+                    System.out.println("mauvaise expression");
+                }
             }
         }
     }
@@ -266,143 +277,203 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         String nomjoueur="";
         if(numjoueur==0)nomjoueur="JOUEUR A";
         if(numjoueur==1)nomjoueur="JOUEUR B";
-        String Texte = "Choisissez une action "+nomjoueur+" :\n";
-        Texte+= "1 : TIR \n";
-        Texte+= "2 : DEPLACEMENT \n";
-        Texte+= "3 : PASSER LE TOUR\n";
-        do
-        {
-            choixdujoueur = JOptionPane.showInputDialog(Texte);
-            choix = Integer.parseInt(choixdujoueur);
-        }while(choix!=1 && choix!=2 && choix!=3);
+        try {
+            String Texte = "Choisissez une action " + nomjoueur + " :\n";
+            Texte += "1 : TIR \n";
+            Texte += "2 : DEPLACEMENT \n";
+            Texte += "3 : PASSER LE TOUR\n";
+            do {
+                choixdujoueur = JOptionPane.showInputDialog(Texte);
+                if(choixdujoueur == null) System.exit(0);
+                choix = Integer.parseInt(choixdujoueur);
+            } while (choix != 1 && choix != 2 && choix != 3);
 
-        if(choix==3){
-            joueur.tourFini();return;
+            if (choix == 3) {
+                joueur.tourFini();
+                return;
+            }
+            if (choix == 1) {
+                attaque(joueur, numjoueur, adversaire);
+            }
+        }catch (Exception e){
+            System.out.println("Mauvaise expression");
         }
-        if(choix==1){
-            int choixtir[]= new int[2];
+    }
 
-            // Porte Avion
-            if(joueur.getPorteAvion().isMort() == false && adversaire.estVivant()) {
-                // Interface
-                choixtir[0] = -1;
-                choixtir[1] = -1;
-                while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
-                    Texte = nomjoueur + ", Quelle est la coordonnée à viser ?\n";
-                    choixdujoueur = JOptionPane.showInputDialog(Texte);
-                    choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                    choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
-                }
-                // Attaque
-                joueur.attaquer((ImplementationJoueur) adversaire, joueur.getPorteAvion(), choixtir[0], choixtir[1]);
-                // Update de la map
-                if (numjoueur == 0) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 4);
-                    updatemapspecifique(joueur.getCarteImpacts(), 2);
-                }
-                if (numjoueur == 1) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 1);
-                    updatemapspecifique(joueur.getCarteImpacts(), 3);
-                }
-            }
+    private void attaque(Joueur joueur, int numjoueur, Joueur adversaire){
+        int choixtir[]= new int[2];
+        String choixdujoueur="";
+        String nomjoueur="";
+        String Texte;
+        boolean valid;
 
-                    // Croiseur
-            if(joueur.getCroiseur().isMort() == false && adversaire.estVivant()){
-                // Interface
-                choixtir[0]=-1;choixtir[1]=-1;
-                while(choixtir[0]<0||choixtir[0]>tailleY||choixtir[1]<0||choixtir[1]>tailleY){
-                    Texte = nomjoueur+", Quelle est la coordonnée à viser ?\n";
-                    choixdujoueur = JOptionPane.showInputDialog(Texte);
-                    choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                    choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+        // Porte Avion
+        if(joueur.getPorteAvion().isMort() == false && adversaire.estVivant()) {
+            valid = true;
+            while(valid) {
+                try {
+                    choixtir[0] = -1;
+                    choixtir[1] = -1;
+                    while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
+                        Texte = nomjoueur + ", Quelles sont les coordonnées à viser par le porte-avions ?\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                    }
+                    if(choixdujoueur != null) {
+                        // Attaque
+                        joueur.attaquer((ImplementationJoueur) adversaire, joueur.getPorteAvion(), choixtir[0], choixtir[1]);
+                        // Update de la map
+                        if (numjoueur == 0) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 4);
+                            updatemapspecifique(joueur.getCarteImpacts(), 2);
+                        }
+                        if (numjoueur == 1) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 1);
+                            updatemapspecifique(joueur.getCarteImpacts(), 3);
+                        }
+                    }
+                    valid = false;
+                } catch (Exception e) {
+                    System.out.println("Mauvaise expression");
                 }
-                // Attaque
-                joueur.attaquer((ImplementationJoueur)adversaire,joueur.getCroiseur(),choixtir[0],choixtir[1]);
-                // Update de la map
-                if(numjoueur==0){
-                    updatemapspecifique(adversaire.getCarteBateaux(),4);
-                    updatemapspecifique(joueur.getCarteImpacts(),2);
-                }
-                if(numjoueur==1) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 1);
-                    updatemapspecifique(joueur.getCarteImpacts(), 3);
-                }
-            }
-
-            // Contre torpilleur
-            if(joueur.getContreTorpilleur().isMort() == false && adversaire.estVivant()){
-                // Interface
-                choixtir[0]=-1;choixtir[1]=-1;
-                while(choixtir[0]<0||choixtir[0]>tailleY||choixtir[1]<0||choixtir[1]>tailleY){
-                    Texte = nomjoueur+", Quelle est la coordonnée à viser ?\n";
-                    choixdujoueur = JOptionPane.showInputDialog(Texte);
-                    choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                    choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
-                }
-                // Attaque
-                joueur.attaquer((ImplementationJoueur)adversaire,joueur.getContreTorpilleur(),choixtir[0],choixtir[1]);
-                // Update de la map
-                if(numjoueur==0){
-                    updatemapspecifique(adversaire.getCarteBateaux(),4);
-                    updatemapspecifique(joueur.getCarteImpacts(),2);
-                }
-                if(numjoueur==1) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 1);
-                    updatemapspecifique(joueur.getCarteImpacts(), 3);
-                }
-            }
-
-            // Sous marin
-            if(joueur.getSousMarrin().isMort() == false && adversaire.estVivant()){
-                // Interface
-                choixtir[0]=-1;choixtir[1]=-1;
-                while(choixtir[0]<0||choixtir[0]>tailleY||choixtir[1]<0||choixtir[1]>tailleY){
-                    Texte = nomjoueur+", Quelle est la coordonnée à viser ?\n";
-                    choixdujoueur = JOptionPane.showInputDialog(Texte);
-                    choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                    choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
-                }
-                // Attaque
-                joueur.attaquer((ImplementationJoueur)adversaire,joueur.getSousMarrin(),choixtir[0],choixtir[1]);
-                // Update de la map
-                if(numjoueur==0){
-                    updatemapspecifique(adversaire.getCarteBateaux(),4);
-                    updatemapspecifique(joueur.getCarteImpacts(),2);
-                }
-                if(numjoueur==1) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 1);
-                    updatemapspecifique(joueur.getCarteImpacts(), 3);
-                }
-            }
-
-            // Torpilleur
-            if(joueur.getTorpilleur().isMort() == false && adversaire.estVivant()){
-                // Interface
-                choixtir[0]=-1;choixtir[1]=-1;
-                while(choixtir[0]<0||choixtir[0]>tailleY||choixtir[1]<0||choixtir[1]>tailleY){
-                    Texte = nomjoueur+", Quelle est la coordonnée à viser ?\n";
-                    choixdujoueur = JOptionPane.showInputDialog(Texte);
-                    choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
-                    choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
-                }
-                // Attaque
-                joueur.attaquer((ImplementationJoueur)adversaire,joueur.getTorpilleur(),choixtir[0],choixtir[1]);
-                // Update de la map
-                if(numjoueur==0){
-                    updatemapspecifique(adversaire.getCarteBateaux(),4);
-                    updatemapspecifique(joueur.getCarteImpacts(),2);
-                }
-                if(numjoueur==1) {
-                    updatemapspecifique(adversaire.getCarteBateaux(), 1);
-                    updatemapspecifique(joueur.getCarteImpacts(), 3);
-                }
-            }
-            if(!adversaire.estVivant()){
-                fin=true;
             }
         }
 
+        // Croiseur
+        if(joueur.getCroiseur().isMort() == false && adversaire.estVivant()){
+            valid = true;
+            while(valid) {
+                try {
+                    choixtir[0] = -1;
+                    choixtir[1] = -1;
+                    while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
+                        Texte = nomjoueur + ", Quelles sont les coordonnées à viser par le croiseur ?\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                    }
+                    if(choixdujoueur != null) {
+                        // Attaque
+                        joueur.attaquer((ImplementationJoueur) adversaire, joueur.getCroiseur(), choixtir[0], choixtir[1]);
+                        // Update de la map
+                        if (numjoueur == 0) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 4);
+                            updatemapspecifique(joueur.getCarteImpacts(), 2);
+                        }
+                        if (numjoueur == 1) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 1);
+                            updatemapspecifique(joueur.getCarteImpacts(), 3);
+                        }
+                    }
+                    valid = false;
+                } catch (Exception e) {
+                    System.out.println("Mauvaise expression");
+                }
+            }
+        }
 
+        // Contre torpilleur
+        if(joueur.getContreTorpilleur().isMort() == false && adversaire.estVivant()){
+            valid = true;
+            while(valid) {
+                try {
+                    choixtir[0] = -1;
+                    choixtir[1] = -1;
+                    while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
+                        Texte = nomjoueur + ", Quelles sont les coordonnées à viser par le contre torpilleur ?\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                    }
+                    if(choixdujoueur != null) {
+                        // Attaque
+                        joueur.attaquer((ImplementationJoueur) adversaire, joueur.getContreTorpilleur(), choixtir[0], choixtir[1]);
+                        // Update de la map
+                        if (numjoueur == 0) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 4);
+                            updatemapspecifique(joueur.getCarteImpacts(), 2);
+                        }
+                        if (numjoueur == 1) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 1);
+                            updatemapspecifique(joueur.getCarteImpacts(), 3);
+                        }
+                    }
+                    valid = false;
+                } catch (Exception e) {
+                    System.out.println("Mauvaise expression");
+                }
+            }
+        }
+
+        // Sous marin
+        if(joueur.getSousMarrin().isMort() == false && adversaire.estVivant()){
+            valid = true;
+            while(valid) {
+                try {
+                    choixtir[0] = -1;
+                    choixtir[1] = -1;
+                    while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
+                        Texte = nomjoueur + ", Quelles sont les coordonnées à viser par le sous marin ?\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                    }
+                    if(choixdujoueur != null) {
+                        // Attaque
+                        joueur.attaquer((ImplementationJoueur) adversaire, joueur.getSousMarrin(), choixtir[0], choixtir[1]);
+                        // Update de la map
+                        if (numjoueur == 0) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 4);
+                            updatemapspecifique(joueur.getCarteImpacts(), 2);
+                        }
+                        if (numjoueur == 1) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 1);
+                            updatemapspecifique(joueur.getCarteImpacts(), 3);
+                        }
+                    }
+                    valid = false;
+                } catch (Exception e) {
+                    System.out.println("Mauvaise expression");
+                }
+            }
+        }
+
+        // Torpilleur
+        if(joueur.getTorpilleur().isMort() == false && adversaire.estVivant()){
+            valid = true;
+            while(valid) {
+                try {
+                    choixtir[0] = -1;
+                    choixtir[1] = -1;
+                    while (choixtir[0] < 0 || choixtir[0] > tailleY || choixtir[1] < 0 || choixtir[1] > tailleY) {
+                        Texte = nomjoueur + ", Quelles sont les coordonnées à viser par le torpilleur ?\n";
+                        choixdujoueur = JOptionPane.showInputDialog(Texte);
+                        choixtir[0] = Integer.parseInt(choixdujoueur.split(" ")[0]);
+                        choixtir[1] = Integer.parseInt(choixdujoueur.split(" ")[1]);
+                    }
+                    if(choixdujoueur != null) {
+                        // Attaque
+                        joueur.attaquer((ImplementationJoueur) adversaire, joueur.getTorpilleur(), choixtir[0], choixtir[1]);
+                        // Update de la map
+                        if (numjoueur == 0) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 4);
+                            updatemapspecifique(joueur.getCarteImpacts(), 2);
+                        }
+                        if (numjoueur == 1) {
+                            updatemapspecifique(adversaire.getCarteBateaux(), 1);
+                            updatemapspecifique(joueur.getCarteImpacts(), 3);
+                        }
+                    }
+                    valid = false;
+                } catch (Exception e) {
+                    System.out.println("Mauvaise expression");
+                }
+            }
+        }
+        if(!adversaire.estVivant()){
+            fin=true;
+        }
     }
 
 
