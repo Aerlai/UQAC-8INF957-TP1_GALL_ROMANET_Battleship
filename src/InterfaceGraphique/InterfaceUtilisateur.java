@@ -304,6 +304,8 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
         int choixtir[]= new int[2];
         String choixdujoueur="";
         String nomjoueur="";
+        if(numjoueur==0)nomjoueur="JOUEUR A";
+        if(numjoueur==1)nomjoueur="JOUEUR B";
         String Texte;
         boolean valid;
 
