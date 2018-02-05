@@ -70,11 +70,11 @@ public class Carte extends Observable {
 
     // méthode d'ajout d'impacts
     public void placerImpact(int x, int y){
-        matrice[x][y]= new Element(false,false,6);
+        matrice[x][y]= new Element(false,false,7);
     }
     // méthode d'ajout d'impacts
     public void placerImpactBateau(int x, int y){
-        matrice[x][y]= new Element(true,false,6);
+        matrice[x][y]= new Element(true,false,8);
     }
     // méthode d'ajout de bateaux
     public void placerBateau(int x, int y, int id, boolean avant){

@@ -202,6 +202,10 @@ public class InterfaceUtilisateur extends JFrame implements Observer, ActionList
             case 4:casegraphique.setBackground(Color.MAGENTA);break;
             case 5:casegraphique.setBackground(Color.RED);break;
             case 6:casegraphique.setBackground(Color.GRAY);break;
+            case 7:casegraphique.setBackground(Color.ORANGE);break;
+            case 8:casegraphique.setBackground(Color.PINK);break;
+
+
             default:casegraphique.setBackground(Color.GRAY);break;
         }
     }

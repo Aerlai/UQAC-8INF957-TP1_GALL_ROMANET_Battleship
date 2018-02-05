@@ -37,10 +37,10 @@ public class ImplementationJoueur implements Joueur {
     // attaque d'une position de l'adversaire
     public void attaquer(ImplementationJoueur joueur, Bateau bateauAttaquant,  int x, int y){
         int id = joueur.carteBateaux.verification(x,y);
-        if (id == 0){
+        if (id == 6){
             this.carteImpacts.placerImpact(x,y);
         }
-        if (id == 1 || id == 2 || id == 3 || id == 4 || id == 5 ){
+        if (id == 1 || id == 2 || id == 3 || id == 4 || id == 5){
             this.carteImpacts.placerImpactBateau(x,y);
             bateauAttaquant.attaquer(joueur, x, y);
         }
